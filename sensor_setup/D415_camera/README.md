@@ -83,5 +83,42 @@ Should print True and show a pipeline object without errors
 ## Install RTSP Server (MediaMTX)
 1. Download and install the ARM64 server:
 ```python
-
+wget https://github.com/bluenviron/mediamtx/releases/download/v1.12.3/mediamtx_v1.12.3_linux_arm64.tar.gz
+tar xzf mediamtx_v1.12.3_linux_arm64.tar.gz
+sudo mv mediamtx /usr/local/bin/rtsp-simple-server
+sudo chmod +x /usr/local/bin/rtsp-simple-server
 ```
+
+2. Launch the server (default listens on rtsp://0.0.0.0:8554)
+```python
+rtsp-simple-server &
+```
+
+## Streaming Script
+make the script within the folder executable:
+```python
+chmod +x stream_rtsp.py
+```
+
+## Run and Test
+1. Start RTSP server (if not running)
+```python
+rtsp-simple-server &
+```
+
+2. Run streaming script:
+```python
+python3.11 stream_rtsp.py
+```
+
+3. View streams in VLC or FFplay 
+```python
+ffplay rtsp://<pi-ip>:8554/ir1
+ffplay rtsp://<pi-ip>:8554/ir2
+```
+
+## Troubleshooting
+- Ensure _version.py and pyrealsense2.so are in the installed package folder
+- Remove any .egg instals before setup.py install
+- Make sure rtsp-simple-server is running and listening on port 8554
+- confirm usb3 connection and run realsense-viewer to verify
