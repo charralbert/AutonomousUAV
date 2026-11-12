@@ -1,0 +1,35 @@
+'''
+This is code is from https://github.com/dsaadatmandi/rplidarc1.git
+
+to use this you need to:
+git clone https://github.com/dsaadatmandi/rplidarc1.git
+cd rplidarc1
+
+and install
+pip install pyserial
+'''
+from scanner import RPLidar
+import asyncio
+
+# Initialize the RPLidar with the appropriate port and baudrate
+lidar = RPLidar("/dev/ttyUSB0", 460800)
+
+# Perform a simple scan
+async def scan_example():
+    # Start a scan and get the coroutine
+    scan_coroutine = lidar.simple_scan()
+    
+    # Create a task to process the scan data
+    async with asyncio.TaskGroup() as tg:
+        tg.create_task(scan_coroutine)
+        # Add other tasks as needed
+    
+    # Reset the device when done
+    lidar.reset()
+
+# Run the example
+try:
+    asyncio.run(scan_example())
+except KeyboardInterrupt:
+    # Ensure proper shutdown on keyboard interrupt
+    lidar.reset()
