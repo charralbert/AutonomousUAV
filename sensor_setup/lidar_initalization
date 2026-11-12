@@ -12,7 +12,7 @@ from scanner import RPLidar
 import asyncio
 
 # Initialize the RPLidar with the appropriate port and baudrate
-lidar = RPLidar("/dev/ttyUSB0", 460800)
+lidar = RPLidar("/dev/serial10", 460800)
 
 # Perform a simple scan
 async def scan_example():
